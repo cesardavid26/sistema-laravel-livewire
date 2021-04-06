@@ -11,7 +11,19 @@ class CreatePost extends Component
     
     public $title, $content;
 
+    public $rules = [
+        'title' => 'required|max:10',
+        'content' => 'required|min:50'
+    ];
+
+    public function updated($propertyName){
+        $this->validateOnly($propertyName);
+    }
+
     public function save(){
+
+        $this -> validate();
+
         Post::create([
             'title' => $this->title,
             'content' => $this->content
