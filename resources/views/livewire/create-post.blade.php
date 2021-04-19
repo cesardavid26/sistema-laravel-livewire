@@ -28,7 +28,7 @@
 
             <div class="mb-4">
                 <x-jet-label value="Contenido del post"/>
-               <textarea class="form-control w-full" rows="6" wire:model="content"></textarea>
+               <textarea class="border-gray-300 focus: border-indigo-300 focus: ring focus: ring-indigo-200 focus: ring-opacity-50 rounded-md shadow-sm w-full" rows="6" wire:model="content"></textarea>
                <x-jet-input-error for="content" />
             </div>
             <div>
