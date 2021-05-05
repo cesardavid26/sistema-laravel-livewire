@@ -13,7 +13,7 @@ class ShowPosts extends Component
   
     use WithFileUploads;
     use WithPagination;
-    
+
     public $search, $post, $image, $identificador ;
     public $sort ="id";
     public $direction = "desc";
@@ -37,6 +37,10 @@ class ShowPosts extends Component
     public function mount(){
         $this -> identificador=rand();
         $this->post = new Post();
+    }
+
+    public function updatingSearch(){
+        $this->resetPage();
     }
 
     public function order($sort){
