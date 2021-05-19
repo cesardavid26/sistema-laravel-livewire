@@ -22,6 +22,8 @@ class ShowPosts extends Component
 
     public $cant='10';
 
+    public $readyToLoad = false;
+
     protected $queryString= [
         'cant' => ['except' => '10'],
         'sort' => ['except' => 'id'],
@@ -37,13 +39,24 @@ class ShowPosts extends Component
     protected $listeners = ['render'=> 'render' ];
     public function render()
     {
-        $posts= Post::where('title', 'like', '%'.$this->search.'%')
+        if($this->readyToLoad){
+            $posts= Post::where('title', 'like', '%'.$this->search.'%')
         ->orWhere('content', 'like', '%'.$this->search.'%')
         ->orderBy($this->sort, $this->direction)
         ->paginate($this->cant);
+        
+        }
+        else{
+            $posts =[];
+        }
+        /*  */
         return view('livewire.show-posts', compact('posts'));
-       
     }
+
+    public function loadPosts(){
+        $this->readyToLoad = true;
+    }
+
     public function mount(){
         $this -> identificador=rand();
         $this->post = new Post();
