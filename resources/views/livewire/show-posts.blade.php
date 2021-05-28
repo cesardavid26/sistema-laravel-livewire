@@ -100,11 +100,16 @@
                         {{$item->content}}
                       </div>
                     </td>
-                    <td class="px-6 py-4  text-sm font-medium">
+                    <td class="px-6 py-4  text-sm font-medium flex">
                         {{--  @livewire('edit-post', ['post' => $post], key($post->id))  --}}
                         <a href="#" class="font-bold text-white py-2 px-4 rounded cursor-pointer  bg-green-600 hover:bg-green-500"
                               wire:click="edit({{$item}})">
                              <i class="fas fa-edit"></i>
+                         </a>
+
+                         <a class="font-bold text-white py-2 px-4 rounded cursor-pointer  bg-red-600 hover:bg-red-500 ml-2"
+                         wire:click="$emit('deletePost', {{$item->id}})">
+                           <i class="fas fa-trash"></i>
                          </a>
                     </td>
                 </tr>
@@ -177,5 +182,33 @@
 
   </x-jet-dialog-modal>
 
+  @push('js')
+  <script src="sweetalert2.all.min.js"></script>
+
+  <script>
+   Livewire.on('deletePost', postId => {
+    Swal.fire({
+      title: '¿Está seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+
+        Livewire.emitTo('show-posts', 'delete', postId);
+        Swal.fire(
+          '¡Eliminado!',
+          'El registro ha sido eliminado',
+          'success'
+        )
+      }
+    })
+   })
+  </script>
+  @endpush
   
 </div>
